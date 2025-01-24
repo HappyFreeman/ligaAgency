@@ -26,7 +26,26 @@ class ProductRequest extends FormRequest
             'name' => ['required', 'string', 'min:10'],
             'article' => ['sometimes', 'alpha_num', Rule::unique('products')->ignore($this->article)],
             'status' => ['required', 'in:available,unavailable'],
-            'data' => ['nullable', 'array'],
+            'data' => ['required', 'array'],
         ];
+    }
+
+    protected function prepareForValidation()
+    {
+        if ($this->has('data') && is_string($this->data)) {
+            // Преобразуем JSON-строку в массив, если это возможно
+            $decodedData = json_decode($this->data, true);
+    
+            if (json_last_error() === JSON_ERROR_NONE) {
+                $this->merge([
+                    'data' => $decodedData,
+                ]);
+            } else {
+                // Если JSON некорректен, очищаем поле
+                $this->merge([
+                    'data' => null,
+                ]);
+            }
+        }
     }
 }

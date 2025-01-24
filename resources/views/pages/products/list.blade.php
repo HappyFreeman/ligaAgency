@@ -1,5 +1,13 @@
 <x-app-layout>
 
+    <div class="my-8">
+        <a href="{{ route('products.create') }}" class="" title="Добавить модель">
+        <span class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">
+            Добавить модель
+        </span>
+        </a>
+    </div>
+
     <div class="relative overflow-x-auto">
         <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
             <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
@@ -21,7 +29,7 @@
                 <td class="px-6 py-4">{{ $product->article }}</td>
                 <td class="px-6 py-4">{{ $product->name }}</td>
                 <td class="px-6 py-4">{{ $product->status }}</td>
-                <td class="px-6 py-4">{{ $product->data }}</td>
+                <td class="px-6 py-4">{{ $product->data ? json_encode($product->data, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE) : '{}' }}</td>
                 <td class="px-6 py-4">
                     <div class="flex items-center">
                         <a href="{{ route('products.edit', ['product' => $product]) }}" title="Редактировать">

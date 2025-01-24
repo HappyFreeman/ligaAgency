@@ -11,7 +11,7 @@ class Product extends Model
     use HasFactory, SoftDeletes;
 
     protected $fillable = ['article', 'name', 'status', 'data']; // название полей которые можно массово заполнять
-    protected $casts = ['data' => 'array']; // преобразование типов полей при получения из бд (иногда перед сохранением)
+    protected $casts = ['data' => 'json']; // преобразование типов полей при получения из бд (иногда перед сохранением)
 
     public function scopeAvailable($query)
     {
